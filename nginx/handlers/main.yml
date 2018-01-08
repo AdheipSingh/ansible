@@ -1,0 +1,10 @@
+---
+ - name: start_services
+   service:
+          name: "{{ item }}"
+          state: started
+          enbaled: true
+   with_items:
+        - nginx
+        - mariadb
+        - php-fpm

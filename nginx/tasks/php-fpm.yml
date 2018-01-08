@@ -1,0 +1,48 @@
+---
+ - name: CREATE USER WEBUSER
+   user:
+        name: webuser
+        state: present
+
+ - name: REPLACE APACHE WITH WEBUSER
+   replace:
+        dest: /etc/php-fpm.d/www.conf
+        regexp: 'apache'
+        replace: 'webuser'
+ 
+ - name: CREATE THE SERVER.CONF FILE IN /etc/nginx/conf.d
+   file: 
+        dest: /etc/nginx/conf.d/server.conf
+        state: touch
+
+ - name: TEMPLATE THE NGINX SERVER.CONF FILE WITH PHP-FPM MODULES
+   template:
+        src: /root/nginx/templates/server.j2
+        dest: /etc/nginx/conf.d/server.conf
+
+ - name: INSTALL WORDPRESS
+   get_url:
+        dest: /usr/share/nginx/html/
+        url: http://wordpress.org/latest.tar.gz 
+
+ - name: EXTRACT THE WORDPRESS MODULE
+   unarchive:
+       src: /usr/share/nginx/html/wordpress-4.9.1.tar.gz 
+       dest: /usr/share/nginx/html/
+       remote_src: yes
+
+ - name: CREATE TEST.PHP FILE
+   lineinfile:
+        dest: /usr/share/nginx/html/test.php
+        create: yes
+        line: <? php echo phpinfo() ?>
+
+ - name: START AND ENABLE ALL THE SERVICES
+   service: 
+        name: "{{ item }}"
+        state: started
+        enabled: true
+   with_items:
+        - nginx
+        - mariadb
+        - php-fpm

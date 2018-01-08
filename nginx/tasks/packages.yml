@@ -1,0 +1,54 @@
+---
+ - name: CREATE NGINX REPO FILE
+   file:
+        path: /etc/yum.repos.d/nginx.repo
+        state: touch
+
+ - name: TEMPLATE NGINX.REPO 
+   template:
+         src: /root/nginx/templates/nginx.j2
+         dest: /etc/yum.repos.d/nginx.repo
+
+ - name: REMOVE HTTPD
+   shell: systemctl is-active httpd
+   ignore_errors: yes
+   register: httpd_output
+   
+ - name: DEBUG THE NGINX REPO
+   debug: 
+        var: httpd_output
+
+ - name: REMOVE HTTPD IF PRESENT
+   yum: 
+        name: httpd
+        state: absent
+   when: httpd_output.failed == false
+
+ - name: INSTALL NGINX
+   yum: 
+        name: nginx
+        state: present
+
+ - name: INSTALL EPEL-RELEASE FOR CENTOS 7 
+   yum: 
+        name: epel-release
+        state: latest
+
+ - name: INSTALL PHP AND MARIADB SERVER
+   yum: 
+        name: "{{ item }}"
+        state: latest
+   with_items:
+        - mariadb
+        - mariadb-server
+        - php
+        - php-fpm
+        - php-mysql
+        - MySQL-python
+
+
+
+
+
+
+

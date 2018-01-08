@@ -1,0 +1,37 @@
+---
+          - yum:
+                name: mariadb-server
+                state: present
+
+          - yum:
+                name: MySQL-python
+                state: present
+
+          - service:
+                name: mariadb
+                state: started
+                enabled: true
+
+          - mysql_user:
+                name: "{{ user }}"
+                host: localhost
+                password: "{{ password }}"
+
+          - mysql_db:
+                name: "{{ db_name }}"
+                state: present
+                login_user: "{{ user }}"
+                login_password: "{{ password }}"
+
+          - mysql_user:
+                name: "{{ puser }}"
+                priv: "{{ db_name }}.*:ALL"
+                login_user: "{{ user }}"
+                login_password: "{{ password }}"
+                state: present
+
+          - file:
+                path: /usr/share/nginx/html/wordpress
+                owner: webuser
+                group: webuser
+                recurse: yes

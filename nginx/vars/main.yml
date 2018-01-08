@@ -1,0 +1,6 @@
+---
+db_name: wordpress
+user: root
+password: admin
+puser: webuser
+              
