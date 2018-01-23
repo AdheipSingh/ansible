@@ -6,4 +6,4 @@ I have not done any changes in the default.conf a sepreate file will be created 
 Wordpress database and the fastcgi will be installed on the same server , you can change if you have a seperate DB server .
 
 
-NOTE:: AT THE TIME OF DEPLOYMENT WORDPRESS LATEST VERSION WAS 7.1 , PLZ CHECK THE LATEST WORDPRESS VERSION AND DO THE CHANGES IN /nginx/tasks/php-fpm.yml , IN THE UNARCHIVE MODULE CHANGE THE WORDPRESS TO LATEST VERSION .
+NOTE:: AT THE TIME OF DEPLOYMENT WORDPRESS LATEST VERSION WAS 7.9.1 , PLZ CHECK THE LATEST WORDPRESS VERSION AND DO THE CHANGES IN /nginx/tasks/php-fpm.yml , IN THE UNARCHIVE MODULE CHANGE THE WORDPRESS TO LATEST VERSION .
