@@ -27,7 +27,7 @@
 
  - name: EXTRACT THE WORDPRESS MODULE
    unarchive:
-       src: /usr/share/nginx/html/wordpress-4.9.1.tar.gz 
+       src: /usr/share/nginx/html/wordpress-4.9.2.tar.gz 
        dest: /usr/share/nginx/html/
        remote_src: yes
 
